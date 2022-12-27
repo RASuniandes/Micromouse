@@ -5729,7 +5729,7 @@
     (property "Value" "220" (id 1) (at 167.64 158.7499 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric" (id 2) (at 165.1 157.48 0)
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric" (id 2) (at 165.1 157.48 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 165.1 157.48 0)
@@ -9055,7 +9055,7 @@
       (reference "R2") (unit 1) (value "220") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/45c613f9-aec8-424a-b480-e2cd3c7f1c41"
-      (reference "R4") (unit 1) (value "220") (footprint "Resistor_SMD:R_0402_1005Metric")
+      (reference "R4") (unit 1) (value "220") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/3e5cccc0-5e8e-4d7a-84ba-3564961b6bdd"
       (reference "R5") (unit 1) (value "100") (footprint "Resistor_SMD:R_0402_1005Metric")
