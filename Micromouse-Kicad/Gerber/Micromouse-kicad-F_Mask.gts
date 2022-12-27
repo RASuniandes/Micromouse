@@ -1,12 +1,12 @@
 G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,(6.0.7)*
-G04 #@! TF.CreationDate,2022-12-26T23:05:37-05:00*
+G04 #@! TF.CreationDate,2022-12-27T10:26:11-05:00*
 G04 #@! TF.ProjectId,Micromouse-kicad,4d696372-6f6d-46f7-9573-652d6b696361,rev?*
 G04 #@! TF.SameCoordinates,Original*
 G04 #@! TF.FileFunction,Soldermask,Top*
 G04 #@! TF.FilePolarity,Negative*
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW (6.0.7)) date 2022-12-26 23:05:37*
+G04 Created by KiCad (PCBNEW (6.0.7)) date 2022-12-27 10:26:11*
 %MOMM*%
 %LPD*%
 G01*
@@ -537,8 +537,8 @@ X126145500Y-68387500D03*
 D39*
 X123605500Y-68387500D03*
 D47*
-X143774000Y-81571000D03*
 X161534000Y-81571000D03*
+X143774000Y-81571000D03*
 D12*
 X119210000Y-70450000D03*
 X118190000Y-70450000D03*
