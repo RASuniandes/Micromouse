@@ -1652,6 +1652,11 @@
       (net 1 "+3.3V") (pintype "passive") (tstamp 49b0691b-6a04-4a55-a792-4273403d0657))
     (pad "E" thru_hole circle (at 11.856 1.25) (size 1.5 1.5) (drill 1) (layers *.Cu *.Mask)
       (net 60 "R_Reciever") (pintype "passive") (tstamp 50c34fc2-d7d0-4a0a-b49f-d707c506cefb))
+    (model "C:/Users/Tatan/3D Objects/KicadModels/LEDcASE.step"
+      (offset (xyz 0 -5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (footprint "Capacitor_SMD:C_0402_1005Metric" (layer "F.Cu")
@@ -3015,6 +3020,11 @@
       (net 1 "+3.3V") (pintype "passive") (tstamp 619fbd27-ef1b-4775-8783-ec4bf41a4e65))
     (pad "E" thru_hole circle (at 11.856 1.25 225) (size 1.5 1.5) (drill 1) (layers *.Cu *.Mask)
       (net 65 "FL_Reciever") (pintype "passive") (tstamp 848c9ec7-a9d8-4e35-97de-ef7b537e7bef))
+    (model "C:/Users/Tatan/3D Objects/KicadModels/LEDcASE.step"
+      (offset (xyz 0 -5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 0))
+    )
   )
 
   (footprint "Connector_PinSocket_2.54mm:PinSocket_1x07_P2.54mm_Vertical" (layer "F.Cu")
@@ -4453,6 +4463,11 @@
       (net 1 "+3.3V") (pintype "passive") (tstamp e5d14c0e-f6bd-40a9-a9de-fe2f842c9237))
     (pad "E" thru_hole circle (at 4.49 1.25 180) (size 1.5 1.5) (drill 1) (layers *.Cu *.Mask)
       (net 66 "L_Reciever") (pintype "passive") (tstamp 3253156c-c1af-4666-ab21-d77f20288927))
+    (model "C:/Users/Tatan/3D Objects/KicadModels/LEDcASE.step"
+      (offset (xyz 13.5 -5 9.04))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 180 0))
+    )
   )
 
   (footprint "custom:MotorHolder" (layer "F.Cu")
@@ -4890,6 +4905,11 @@
       (net 1 "+3.3V") (pintype "passive") (tstamp 08425265-c7a1-4bb2-948b-9a64501bbc15))
     (pad "E" thru_hole circle (at 4.49 1.25 315) (size 1.5 1.5) (drill 1) (layers *.Cu *.Mask)
       (net 59 "FR_Reciever") (pintype "passive") (tstamp f5cf3d7e-10b2-487f-aff9-fc04bd499295))
+    (model "C:/Users/Tatan/3D Objects/KicadModels/LEDcASE.step"
+      (offset (xyz 14 -5 9.04))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 90 0 180))
+    )
   )
 
   (footprint "Capacitor_SMD:C_0402_1005Metric" (layer "F.Cu")
