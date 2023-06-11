@@ -532,7 +532,7 @@
       "idf": "",
       "netlist": "Micromouse-kicad.net",
       "specctra_dsn": "",
-      "step": "",
+      "step": "Micromouse-kicad.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
