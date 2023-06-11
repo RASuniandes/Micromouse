@@ -1352,7 +1352,7 @@
       (net 54 "unconnected-(J2-Shield-Pad6)") (pinfunction "Shield") (pintype "passive+no_connect") (tstamp b08171be-742f-49bf-bdd8-93a1d67bd25a))
     (pad "6" smd rect (at 3.2 -0.725 90) (size 1.5 1) (layers "F.Cu" "F.Paste" "F.Mask")
       (net 54 "unconnected-(J2-Shield-Pad6)") (pinfunction "Shield") (pintype "passive+no_connect") (tstamp ba4a9203-2a0f-4dbc-a127-24ec18bb57f7))
-    (model "C:/Users/Tatan/3D Objects/KicadModels/10118193-0001LF--3DModel-STEP-56544.STEP"
+    (model "${KIPRJMOD}/Librerias/STEP/10118193-0001LF--3DModel-STEP-56544.STEP"
       (offset (xyz 0 -1 0))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 0))
@@ -3154,6 +3154,11 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
+    (model "${KIPRJMOD}/Librerias/STEP/HC_05 Blue Tooth Module.stp"
+      (offset (xyz -5.5 -6.5 25.5))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 -90))
+    )
   )
 
   (footprint "Resistor_SMD:R_0402_1005Metric" (layer "F.Cu")
@@ -3655,10 +3660,10 @@
       (net 24 "OutML1") (pinfunction "Pin_6") (pintype "passive") (tstamp 58cca238-25c2-4c50-8766-cdd57ad56ff6))
     (pad "MP" smd roundrect (at -3.8 -1.2) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.2083333333) (tstamp 6bf4b9c8-70b2-47ad-acc8-ec989214bc3c))
     (pad "MP" smd roundrect (at 3.8 -1.2) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.2083333333) (tstamp 7d1306b2-5dd0-45b0-8ecc-172aa9cdcf6c))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_BM06B-SRSS-TB_1x06-1MP_P1.00mm_Vertical.wrl"
-      (offset (xyz 0 0 0))
+    (model "${KIPRJMOD}/Librerias/STEP/User Library-JST - BM06B-SRSS-TB (SH SERIES - 1_0mm PITCH WIRE-TO-BOARD, SMT).STEP"
+      (offset (xyz 0 1.5 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -4633,10 +4638,10 @@
       (net 28 "OutMR1") (pinfunction "Pin_6") (pintype "passive") (tstamp da3985bb-b78c-4bfd-bc5d-75417149748f))
     (pad "MP" smd roundrect (at -3.8 -1.2) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.2083333333) (tstamp b2113f64-57db-472b-895f-c91b69ae2b71))
     (pad "MP" smd roundrect (at 3.8 -1.2) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.2083333333) (tstamp e8ce107f-802f-44b5-983c-323a8440133e))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_BM06B-SRSS-TB_1x06-1MP_P1.00mm_Vertical.wrl"
-      (offset (xyz 0 0 0))
+    (model "${KIPRJMOD}/Librerias/STEP/User Library-JST - BM06B-SRSS-TB (SH SERIES - 1_0mm PITCH WIRE-TO-BOARD, SMT).STEP"
+      (offset (xyz 0 1.5 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
