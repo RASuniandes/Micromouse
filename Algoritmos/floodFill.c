@@ -294,5 +294,7 @@ void main()   // define the main function
         updateFF();
         updatePosition(minNeighbor[0], minNeighbor[1]);
     }
+
+    print_2DMatrix(mazeCells);
 }  
 
