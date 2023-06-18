@@ -32,6 +32,10 @@ unsigned char mazeWalls[MAZE_SIZE][MAZE_SIZE] = { 0x0E, 0x0A, 0x09, 0x0C, 0x0A, 
  0x05, 0x06, 0x01, 0x07, 0x06, 0x08, 0x02, 0x0A, 0x0A, 0x0B, 0x06, 0x08, 0x0A, 0x0A, 0x00, 0x01,
  0x06, 0x0A, 0x02, 0x0A, 0x0A, 0x02, 0x0B, 0x0E, 0x0A, 0x0A, 0x0A, 0x02, 0x0A, 0x0A, 0x03, 0x07};
 
+
+ //mazeVisit - Matriz que almacena las celdas ya visitadas
+ unsigned char mazeVisit[MAZE_SIZE][MAZE_SIZE];
+
 //mouseCell - Tupla que almacena las coordenadas actuales del MM (x,y)
 unsigned char mouseCell[2];
 
@@ -65,6 +69,19 @@ void print_2DMatrix(unsigned char matrix[MAZE_SIZE][MAZE_SIZE]){
     }
 }
 
+/*Función de ayuda que suma todos los elementos de una matriz*/
+int sum_2DMatrix(unsigned char matrix[MAZE_SIZE][MAZE_SIZE]){
+    
+    int sum = 0;
+    
+    for(unsigned char i = 0; i < MAZE_SIZE; i++){
+        for(unsigned char j = 0; j < MAZE_SIZE; j++){
+            sum += matrix[i][j];
+        }
+    }
+
+    return sum;
+}
 
 /*Función encargada de actualizar las paredes vistas en cada celda:
     Requiere:
@@ -114,6 +131,8 @@ void updateOrientation(unsigned char orientation){
 void updatePosition(unsigned char x, unsigned char y){
     mouseCell[0] = x;
     mouseCell[1] = y;
+
+    mazeVisit[x][y] = 1;
 }
 
 /*Función encargada de obtener los vecinos ACCESIBLES
@@ -279,7 +298,7 @@ void main()   // define the main function
 {  
 
     initFF(); 
-    queue = createQueue(1000);
+    queue = createQueue(100);
     print_2DMatrix(mazeCells);
 
     //Inicialización del MM (Celda de inicio - Orientación: Norte)
@@ -294,7 +313,5 @@ void main()   // define the main function
         updateFF();
         updatePosition(minNeighbor[0], minNeighbor[1]);
     }
-
-    print_2DMatrix(mazeCells);
 }  
 
