@@ -288,9 +288,6 @@ void updateFF(){
 
     }
 
-    printf("MIN) x: %d | ", minNeighbor[0]);
-    printf("y: %d | ", minNeighbor[1]);
-    printf("dist: %d \n", mazeCells[minNeighbor[0]][minNeighbor[1]]);
 
 }
 
@@ -311,7 +308,12 @@ void main()   // define the main function
     //Simulamos el MM 
     while(mazeCells[mouseCell[0]][mouseCell[1]] != 0){
         updateFF();
+        getMinNeighbor(mouseCell[0], mouseCell[1]);
         updatePosition(minNeighbor[0], minNeighbor[1]);
+        
+        printf("MIN) x: %d | ", minNeighbor[0]);
+        printf("y: %d | ", minNeighbor[1]);
+        printf("dist: %d \n", mazeCells[minNeighbor[0]][minNeighbor[1]]);
     }
 }  
 
