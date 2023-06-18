@@ -308,6 +308,7 @@ void main()   // define the main function
     //Simulamos el MM 
     while(mazeCells[mouseCell[0]][mouseCell[1]] != 0){
         updateFF();
+        getNeighbors(mouseCell[0], mouseCell[1]);
         getMinNeighbor(mouseCell[0], mouseCell[1]);
         updatePosition(minNeighbor[0], minNeighbor[1]);
         
