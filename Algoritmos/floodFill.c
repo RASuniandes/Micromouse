@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h> // Header-file for boolean data-type.
+#include "queue.h"
 
 #define MAZE_SIZE 16
 
@@ -14,13 +15,45 @@
 unsigned char mazeCells[MAZE_SIZE][MAZE_SIZE];
 
 //mazeWalls -  Matriz que almacena las paredes detectadas en cada celda
-unsigned char mazeWalls[MAZE_SIZE][MAZE_SIZE];
+unsigned char mazeWalls[MAZE_SIZE][MAZE_SIZE] = { 0x0E, 0x08, 0x08, 0x08, 0x0A, 0x09, 0x0C, 0x0A, 0x0A, 0x0B, 0x0C, 0x0A, 0x08, 0x0A, 0x08, 0x09,
+ 0x0E, 0x03, 0x07, 0x07, 0x0C, 0x02, 0x02, 0x0B, 0x0D, 0x0C, 0x02, 0x09, 0x05, 0x0D, 0x07, 0x05,
+ 0x0D, 0x0C, 0x0A, 0x08, 0x02, 0x0B, 0x0C, 0x09, 0x04, 0x00, 0x0A, 0x00, 0x00, 0x02, 0x0A, 0x01,
+ 0x06, 0x02, 0x08, 0x02, 0x0B, 0x0C, 0x01, 0x04, 0x01, 0x04, 0x08, 0x03, 0x05, 0x0E, 0x0B, 0x05,
+ 0x0E, 0x08, 0x03, 0x0D, 0x0C, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x09, 0x04, 0x0A, 0x0A, 0x01,
+ 0x0C, 0x02, 0x09, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x02, 0x08, 0x0A, 0x01,
+ 0x06, 0x08, 0x03, 0x05, 0x04, 0x01, 0x06, 0x03, 0x06, 0x03, 0x06, 0x01, 0x0C, 0x02, 0x0B, 0x05,
+ 0x0E, 0x00, 0x0B, 0x04, 0x01, 0x06, 0x09, 0x0C, 0x09, 0x0C, 0x09, 0x06, 0x00, 0x0A, 0x08, 0x01,
+ 0x0E, 0x00, 0x0B, 0x07, 0x04, 0x09, 0x05, 0x04, 0x03, 0x05, 0x04, 0x09, 0x06, 0x08, 0x03, 0x05,
+ 0x0E, 0x00, 0x0B, 0x0D, 0x07, 0x06, 0x02, 0x02, 0x0B, 0x04, 0x01, 0x04, 0x09, 0x04, 0x09, 0x05,
+ 0x0E, 0x00, 0x0B, 0x05, 0x0C, 0x09, 0x0C, 0x09, 0x0C, 0x01, 0x04, 0x01, 0x05, 0x07, 0x06, 0x01,
+ 0x0E, 0x00, 0x0B, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x0C, 0x09, 0x05,
+ 0x0E, 0x00, 0x0B, 0x05, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01,
+ 0x0E, 0x00, 0x0B, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x05,
+ 0x0E, 0x01, 0x0C, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01, 0x04, 0x01,
+ 0x0E, 0x02, 0x03, 0x06, 0x03, 0x06, 0x03, 0x06, 0x03, 0x06, 0x03, 0x06, 0x03, 0x06, 0x03, 0x07,};
 
 //mouseCell - Tupla que almacena las coordenadas actuales del MM (x,y)
 unsigned char mouseCell[2];
 
 //mouseOrientation - Variable que almacena la orientación actual del MM (Por defecto es 0)
 unsigned char mouseOrientation;
+
+//Cola de FloodFill
+struct Queue* queue;
+
+//Buffer de las distancias a los posibles vecinos
+/*  
+    Índice: 
+        0 - Vecino en el norte
+        1 - Vecino en el este
+        2 - Vecino en el sur
+        3 - Vecino en el oeste
+*/
+int neighborBuffer[4] = {-1, -1, -1, -1};
+
+//Buffer con las coordenadas al vecino con distancia mínima
+int minNeighbor[2] = {-1, -1};
+
 
 /*Función de ayuda para imprimir matrices cuadradas*/
 void print_2DMatrix(unsigned char matrix[MAZE_SIZE][MAZE_SIZE]){
@@ -83,7 +116,72 @@ void updatePosition(unsigned char x, unsigned char y){
     mouseCell[1] = y;
 }
 
+/*Función encargada de obtener los vecinos ACCESIBLES
+    Parámetrox:
+        x: Posición en x de la celda central
+        y: Posición en y de la celda central*/
+void getNeighbors(unsigned char x, unsigned char y){
+        neighborBuffer[0] = -1;
+        neighborBuffer[1] = -1;
+        neighborBuffer[2] = -1;
+        neighborBuffer[3] = -1;
 
+        unsigned char currentWall = mazeWalls[x][y];
+
+        //a. Se revisa si en el Norte hay pared
+        if( (currentWall & 1) != 1){
+            neighborBuffer[0] = mazeCells[x + 1][y];
+        }
+
+        //b. Se revisa si en el Este hay pared
+        if( (currentWall & 2) != 2){
+            neighborBuffer[1] = mazeCells[x][y + 1];
+        }
+
+        //c. Se revisa si en el Sur hay pared
+        if( (currentWall & 4) != 4){
+            neighborBuffer[2] = mazeCells[x - 1][y];
+        }
+
+        //d. Se revisa si en Oeste hay pared
+        if( (currentWall & 8) != 8){
+            neighborBuffer[3] = mazeCells[x][y - 1];
+        }
+}
+
+/*Función encargada de actualizar las coordenadas del vecino con la menor distancia al centro*/
+void getMinNeighbor(unsigned char x, unsigned char y){
+
+    //Por defecto, asumimos que el menor va a ser el que está al norte
+    minNeighbor[0] = x + 1;
+    minNeighbor[1] = y;
+
+    unsigned char minDist = 255; //Asignamos el valor máximo de distancia
+
+    for(char i = 0; i < 4; i++){
+        if(neighborBuffer[i] != -1){
+            if(neighborBuffer[i] <= minDist){
+                minDist = neighborBuffer[i]; //Actualizamos la distancia mínima al vecino
+                if(i == 0){
+                    minNeighbor[0] = x + 1;
+                    minNeighbor[1] = y;
+                }
+                else if(i == 1){
+                    minNeighbor[0] = x;
+                    minNeighbor[1] = y + 1;
+                }
+                else if(i == 2){
+                    minNeighbor[0] = x - 1;
+                    minNeighbor[1] = y;
+                }
+                else if(i == 3){
+                    minNeighbor[0] = x;
+                    minNeighbor[1] = y - 1;
+                }
+            }
+        }
+    }
+}
 
 /* Función que inicializa el algoritmo de FloodFill, asignando los respectivos valores a la matriz mazeCells */
 void initFF(){
@@ -112,15 +210,89 @@ void initFF(){
     mouseCell[1] = 0;
 }
 
+
+/*Función que ejecuta el algoritmo de FloodFill*/
+void updateFF(){
+
+    //0. Buffer temporal para almacenar las coordenadas
+    char cellCoords[2];
+
+    //1. Agregar la celda actual a la cola
+    unsigned char cellNum = mouseCell[0] + mouseCell[1]*16; //Se transforma de coords a valor
+    enqueue(queue, cellNum);
+
+    //2. Mientras la cola no está vacía...
+    while(!isEmpty(queue)){
+        cellNum = dequeue(queue);
+
+        cellCoords[1] = cellNum / MAZE_SIZE;
+        cellCoords[0] = cellNum - (MAZE_SIZE)*cellCoords[1];
+        
+        //3. Se obtiene la distancia de la celda actual en la que está el MM
+        unsigned char current_distance  = mazeCells[cellCoords[0]][cellCoords[1]];
+
+        //4.  Se obtienen los vecinos accesibles
+        getNeighbors(cellCoords[0], cellCoords[1]); //Actualiza el buffer
+
+        //5. Se obtienen las coordenadas del menor de los vecinos
+        getMinNeighbor(cellCoords[0], cellCoords[1]); //Actualiza las coordenadas del menor de los vecinos
+
+        //6. Si la distancia de la celda considerada es menor o igual que la distancia desde el menor de sus vecinos
+        unsigned char neigh_distance = mazeCells[minNeighbor[0]][minNeighbor[1]];
+        if(current_distance <= neigh_distance){
+
+            //De cumplirse 6, se debe actualizar la distancia de la celda actual = distancia min neigh + 1
+            mazeCells[cellCoords[0]][cellCoords[1]] = neigh_distance + 1;
+
+            //Se procede a agregar todos los vecinos accesibles a la cola
+            unsigned char neighNum;
+
+            for(unsigned char i = 0; i < 4; i++){
+                if(neighborBuffer[i] != -1){
+                    if(i == 0){
+                        neighNum = (mouseCell[0] + 1) + (mouseCell[1])*16;
+                    }
+                    else if(i == 1){
+                        neighNum = (mouseCell[0]) + (mouseCell[1] + 1)*16;
+                    }
+                    else if(i == 2){
+                        neighNum = (mouseCell[0] - 1) + (mouseCell[1])*16;
+                    }
+                    else if(i == 3){
+                        neighNum = (mouseCell[0]) + (mouseCell[1] - 1)*16;
+                    }
+
+                    enqueue(queue, neighNum);
+                }
+            }
+        }
+
+
+        printf("MIN) x: %d | ", minNeighbor[0]);
+        printf("y: %d | ", minNeighbor[1]);
+        printf("dist: %d \n", mazeCells[minNeighbor[0]][minNeighbor[1]]);
+    }
+    
+}
+
 void main()   // define the main function  
 {  
+
     initFF(); 
-    //print_2DMatrix(mazeCells);
+    queue = createQueue(1000);
+    print_2DMatrix(mazeCells);
 
     //Inicialización del MM (Celda de inicio - Orientación: Norte)
     updatePosition(0, 0);
     updateOrientation(0);
-    updateWalls(true, true, false);
 
-    print_2DMatrix(mazeWalls);
+    //print_2DMatrix(mazeWalls);
+    
+
+    //Simulamos el MM 
+    while(mazeCells[mouseCell[0]][mouseCell[1]] != 0){
+        updateFF();
+        updatePosition(minNeighbor[0], minNeighbor[1]);
+    }
 }  
+
