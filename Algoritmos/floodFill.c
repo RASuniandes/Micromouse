@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h> // Header-file for boolean data-type.
 #include "queue.h"
+#include <string.h>
 
 #define MAZE_SIZE 16
 
@@ -294,27 +295,42 @@ void updateFF(){
 void main()   // define the main function  
 {  
 
+    //i. Se inicializa el laberinto con los valores por defecto (sin paredes)
     initFF(); 
     queue = createQueue(100);
+    updatePosition(0, 0); //Pos. Inicial: Esquina Inferior Izquierda
+    updateOrientation(0); //Orientación Inicial: Norte
+    
+    //ii. Algoritmo inicial: Ejecutar hasta encontrar el centro
+    //En tiempo real, el código al interior del ciclo debe ejecutarse cada que se avanza una celda físicamente
+
+
+    for(int i = 0; i < 1000; i++){
+        updatePosition(0,0);
+
+        memset(mazeVisit, 0, sizeof mazeVisit);
+
+        while(mazeCells[mouseCell[0]][mouseCell[1]] != 0){
+
+            //TO-DO: Recivir lecturas del MM y actualizar el laberinto
+            //updateWalls(X);
+            updateFF();
+
+            getNeighbors(mouseCell[0], mouseCell[1]);
+            getMinNeighbor(mouseCell[0], mouseCell[1]);
+            updatePosition(minNeighbor[0], minNeighbor[1]);
+
+            //TO-DO: Envía al MM la casilla siguiente a la que debe moverse
+            //Tan simple como acceder a minNeighbor
+            
+            //printf("MIN) x: %d | ", minNeighbor[0]);
+            //printf("y: %d | ", minNeighbor[1]);
+            //printf("dist: %d \n", mazeCells[minNeighbor[0]][minNeighbor[1]]);
+        }
+    }
+
+            
     print_2DMatrix(mazeCells);
 
-    //Inicialización del MM (Celda de inicio - Orientación: Norte)
-    updatePosition(0, 0);
-    updateOrientation(0);
-
-    //print_2DMatrix(mazeWalls);
-    
-
-    //Simulamos el MM 
-    while(mazeCells[mouseCell[0]][mouseCell[1]] != 0){
-        updateFF();
-        getNeighbors(mouseCell[0], mouseCell[1]);
-        getMinNeighbor(mouseCell[0], mouseCell[1]);
-        updatePosition(minNeighbor[0], minNeighbor[1]);
-        
-        printf("MIN) x: %d | ", minNeighbor[0]);
-        printf("y: %d | ", minNeighbor[1]);
-        printf("dist: %d \n", mazeCells[minNeighbor[0]][minNeighbor[1]]);
-    }
 }  
 
