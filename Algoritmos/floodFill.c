@@ -16,7 +16,8 @@
 unsigned char mazeCells[MAZE_SIZE][MAZE_SIZE];
 
 //mazeWalls -  Matriz que almacena las paredes detectadas en cada celda
-unsigned char mazeWalls[MAZE_SIZE][MAZE_SIZE] = { 0x0E, 0x0A, 0x09, 0x0C, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x08, 0x0A, 0x0A, 0x0A, 0x08, 0x09,
+unsigned char mazeWalls[MAZE_SIZE][MAZE_SIZE] = {
+ 0x0E, 0x0A, 0x09, 0x0C, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x08, 0x0A, 0x0A, 0x0A, 0x08, 0x09,
  0x0C, 0x09, 0x05, 0x06, 0x08, 0x0A, 0x0A, 0x0A, 0x0A, 0x0B, 0x06, 0x0A, 0x0A, 0x0A, 0x03, 0x05,
  0x05, 0x05, 0x05, 0x0C, 0x02, 0x0B, 0x0E, 0x08, 0x0A, 0x0A, 0x08, 0x0A, 0x08, 0x08, 0x09, 0x05,
  0x05, 0x04, 0x01, 0x06, 0x08, 0x0A, 0x09, 0x04, 0x0A, 0x0A, 0x00, 0x0A, 0x03, 0x05, 0x05, 0x05,
@@ -31,8 +32,8 @@ unsigned char mazeWalls[MAZE_SIZE][MAZE_SIZE] = { 0x0E, 0x0A, 0x09, 0x0C, 0x0A, 
  0x05, 0x05, 0x0D, 0x05, 0x05, 0x04, 0x0A, 0x08, 0x03, 0x05, 0x06, 0x0A, 0x03, 0x05, 0x04, 0x01,
  0x05, 0x05, 0x04, 0x01, 0x04, 0x03, 0x0C, 0x02, 0x0B, 0x06, 0x08, 0x0A, 0x0A, 0x03, 0x05, 0x05,
  0x05, 0x06, 0x01, 0x07, 0x06, 0x08, 0x02, 0x0A, 0x0A, 0x0B, 0x06, 0x08, 0x0A, 0x0A, 0x00, 0x01,
- 0x06, 0x0A, 0x02, 0x0A, 0x0A, 0x02, 0x0B, 0x0E, 0x0A, 0x0A, 0x0A, 0x02, 0x0A, 0x0A, 0x03, 0x07};
-
+ 0x06, 0x0A, 0x02, 0x0A, 0x0A, 0x02, 0x0B, 0x0E, 0x0A, 0x0A, 0x0A, 0x02, 0x0A, 0x0A, 0x03, 0x07
+};
 
  //mazeVisit - Matriz que almacena las celdas ya visitadas
  unsigned char mazeVisit[MAZE_SIZE][MAZE_SIZE];
@@ -180,7 +181,9 @@ void getMinNeighbor(unsigned char x, unsigned char y){
 
     for(char i = 0; i < 4; i++){
         if(neighborBuffer[i] != -1){
-            if(neighborBuffer[i] <= minDist){
+
+            //Si es menor, actualiza el mínimo con normalidad
+            if(neighborBuffer[i] < minDist){
                 minDist = neighborBuffer[i]; //Actualizamos la distancia mínima al vecino
                 if(i == 0){
                     minNeighbor[0] = x;
@@ -197,6 +200,38 @@ void getMinNeighbor(unsigned char x, unsigned char y){
                 else if(i == 3){
                     minNeighbor[0] = x - 1;
                     minNeighbor[1] = y;
+                }
+            }
+
+            //Si son iguales, se priorizan las celdas no descubiertas
+            if(neighborBuffer[i] == minDist){
+
+                //Así mismo, se prioriza una dirección aleatoria cuando ambos vecinos ya fueron descubiertos
+                int r = rand() % 4;
+
+                if(i == 0){
+                    if(mazeVisit[minNeighbor[0]][minNeighbor[1]] - mazeVisit[x][y+1] > 0 || r == 0){
+                        minNeighbor[0] = x;
+                        minNeighbor[1] = y + 1;
+                    }
+                }
+                else if(i == 1){
+                    if(mazeVisit[minNeighbor[0]][minNeighbor[1]] - mazeVisit[x+1][y] > 0  || r == 1){
+                        minNeighbor[0] = x + 1;
+                        minNeighbor[1] = y;
+                    }
+                }
+                else if(i == 2){
+                    if(mazeVisit[minNeighbor[0]][minNeighbor[1]] - mazeVisit[x][y-1] > 0  || r == 2){
+                        minNeighbor[0] = x;
+                        minNeighbor[1] = y - 1;
+                    }
+                }
+                else if(i == 3){
+                    if(mazeVisit[minNeighbor[0]][minNeighbor[1]] - mazeVisit[x - 1][y] > 0  || r == 3){
+                        minNeighbor[0] = x - 1;
+                        minNeighbor[1] = y;
+                    }
                 }
             }
         }
@@ -304,11 +339,13 @@ void main()   // define the main function
     //ii. Algoritmo inicial: Ejecutar hasta encontrar el centro
     //En tiempo real, el código al interior del ciclo debe ejecutarse cada que se avanza una celda físicamente
 
+    char runVisit[MAZE_SIZE][MAZE_SIZE];
 
-    for(int i = 0; i < 1000; i++){
+    for(int i = 0; i < 1; i++){
         updatePosition(0,0);
 
-        memset(mazeVisit, 0, sizeof mazeVisit);
+        memset(runVisit, 0, sizeof runVisit);
+        runVisit[0][0] = 1;
 
         while(mazeCells[mouseCell[0]][mouseCell[1]] != 0){
 
@@ -319,6 +356,7 @@ void main()   // define the main function
             getNeighbors(mouseCell[0], mouseCell[1]);
             getMinNeighbor(mouseCell[0], mouseCell[1]);
             updatePosition(minNeighbor[0], minNeighbor[1]);
+            runVisit[minNeighbor[0]][minNeighbor[1]] = 1;
 
             //TO-DO: Envía al MM la casilla siguiente a la que debe moverse
             //Tan simple como acceder a minNeighbor
@@ -329,8 +367,12 @@ void main()   // define the main function
         }
     }
 
+    //print_2DMatrix(runVisit);
+    printf("\n Last run pah length: %d", sum_2DMatrix(runVisit));
+
+
             
-    print_2DMatrix(mazeCells);
+
 
 }  
 
