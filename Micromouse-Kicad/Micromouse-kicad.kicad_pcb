@@ -5924,10 +5924,10 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 90 180 0))
     )
-    (model "${KIPRJMOD}/Librerias/STEP/pololu-wheel-42x19mm.step"
-      (offset (xyz 7.5 -24.5 5))
-      (scale (xyz 1 1 1))
-      (rotate (xyz 90 180 0))
+    (model "${KIPRJMOD}/Librerias/STEP/Urethane_Sumo_Wheel.IGS.STP"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 0.4))
+      (rotate (xyz 0 0 0))
     )
     (model "${KIPRJMOD}/Librerias/STEP/magnetic-encoder-with-side-entry-connector-for-micro-metal-gearmotors.step"
       (offset (xyz 7.5 7.5 5))
