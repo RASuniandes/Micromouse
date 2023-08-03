@@ -1,0 +1,5 @@
+../Core/Src/i2c.c:4:19:i2c_init	24	static
+../Core/Src/i2c.c:12:19:i2c_read_8_bit	40	static
+../Core/Src/i2c.c:20:19:i2c_read_16_bit	40	static
+../Core/Src/i2c.c:32:19:i2c_write_8_bit	32	static
+../Core/Src/i2c.c:38:19:i2c_write_16_bit	32	static
