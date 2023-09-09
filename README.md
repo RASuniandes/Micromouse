@@ -50,6 +50,6 @@
 ## Robot
 | Initial Assembly | Final Version |
 | --- | --- |
-| <img  src="https://github.com/RASuniandes/Micromouse/assets/78126968/16c8c403-569f-413f-9a64-a15f5507387d" width="400"/> | <img align="center" src="https://github.com/RASuniandes/Micromouse/assets/78126968/75619d0c-73f8-47fe-adb7-da892f7626c7" width="400"/> | 
+| <img  src="https://github.com/RASuniandes/Micromouse/assets/78126968/16c8c403-569f-413f-9a64-a15f5507387d" width="400"/> | <img align="center" src="https://github.com/RASuniandes/Micromouse/assets/78126968/8ecccf2a-8337-48c6-af97-6395ff702d4f" width="400"/> | 
 
 
