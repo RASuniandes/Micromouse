@@ -39,7 +39,7 @@
 - [ ] Development of external interfaces to ease communication with the robot
 
 ## Shematic
-![Micromouse-kicad](https://github.com/RASuniandes/Micromouse/assets/78126968/fe3fabea-0bf1-4be9-a2f5-132f21856092)
+![Micromouse-kicad](https://github.com/RASuniandes/Micromouse/assets/78126968/97d0444c-70de-4187-8ba6-6f75392cbf0e)
 
 ## PCB Design and 3D Render
 
